@@ -1,0 +1,23 @@
+{
+  "name": "coinprice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "body-parser": "^1.19.2",
+    "crypto": "^1.0.1",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.3",
+    "qs": "^6.10.3",
+    "randomstring": "^1.2.2",
+    "websocket": "^1.0.34",
+    "winston": "^3.6.0",
+    "ws": "^8.5.0"
+  }
+}
