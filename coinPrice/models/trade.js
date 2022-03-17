@@ -43,6 +43,35 @@ const BuySchema = new mongoose.Schema({
     },
     fills:{
         type: Array
+    },
+    profit:{
+        type: Number,
+        default: 0
+    },
+    tradeStatus : {
+        type: String,
+        enum:["NEW", "COMPLETED"],
+        default: "NEW"
+    },
+    takeProfitEnable : {
+        type: Boolean,
+        default: false
+    },
+    stopLossEnable : {
+        type : Boolean,
+        default: false
+    },
+    currentPrice : {
+        type : Number,
+        default: 0
+    },
+    profitPercentage : {
+        type: Number,
+        default: 0
+    },
+    entryPrice: {
+        type: Number,
+        default: 0
     }
 }, { timestamps: true})
 

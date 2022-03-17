@@ -19,9 +19,9 @@ const payload = {
             ws.on('message', async(data) => {
             const tradeInfo = JSON.parse(data);
             payloadData = tradeInfo;
-            console.log("PayloadData--------------------------------------------->", payloadData)
+            // console.log("PayloadData--------------------------------------------->", payloadData)
             let payload = payloadData;
-            console.log("find_Status-------------------->", payload.X)
+            // console.log("find_Status-------------------->", payload.X)
             if(payload.X === "NEW"){
                 const historyData = new History({
                     symbol: payload.s,
@@ -40,12 +40,12 @@ const payload = {
                 })
 
                 const saveHistoryData = await historyData.save();
-                console.log("save History Data--------------------------->", saveHistoryData)
+                // console.log("save History Data--------------------------->", saveHistoryData)
             }
             if(payload.X === "FILLED") {
-                console.log("Filled Data------------------------->",payload.X)
+                // console.log("Filled Data------------------------->",payload.X)
                 const updateStatus = await History.updateOne( { orderId: payload.i }, { "$set": { "status": payload.X } })
-                console.log("Updated Data------------------------------>", updateStatus);
+                // console.log("Updated Data------------------------------>", updateStatus);
             }      
             });
 
@@ -74,14 +74,14 @@ const payload = {
         try {
             
             const ws = new WebSocket('wss://stream.binance.com:9443/ws/' + listen_key );
-            console.log('WalletPayload Socket Opened', Date.now());
+            // console.log('WalletPayload Socket Opened', Date.now());
 
             ws.on('message', async (data) => {
                 const info = JSON.parse(data);
                 walletData = info;
                 // const sendVal = parseInt(walletData.d);
-                console.log("walletData----------------------------------------->", walletData)
-                console.log("coin name form find user------------------------>", walletData.e)
+                // console.log("walletData----------------------------------------->", walletData)
+                // console.log("coin name form find user------------------------>", walletData.e)
                 if(walletData.e == "outboundAccountPosition"){
 
                     const findUser = await Userwallet.findOne({"user_id" : "61ada80a46f32db7adcd1d53"});
@@ -90,7 +90,7 @@ const payload = {
                          (data) => {
                              if(data.coin == walletData.B[0].a) {
                                 data.bal = walletData.B[0].f
-                                console.log("data.bal------------>", data.bal)
+                                // console.log("data.bal------------>", data.bal)
                             }
                         }
                     )

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const url = 'mongodb://localhost/CryptoApp'
 require('./router/fxPayload');
 require('./router/payload');
-
+require('./router/currentPriceWS');
 mongoose.connect(url, {useNewUrlParser : true})
 const con = mongoose.connection;
 con.on('open', ()=> {

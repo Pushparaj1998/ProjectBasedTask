@@ -21,7 +21,7 @@ const FxPayload = {
 
             const tradeInfo = await JSON.parse(data);
             // FXPayloadData = tradeInfo;
-             console.log("FXPayloadData--------------------------------------------->", tradeInfo);
+            //  console.log("FXPayloadData--------------------------------------------->", tradeInfo);
             // console.log("FXPayloadDataEvent--------------------------------------------->",tradeInfo.e);
             
             
@@ -95,7 +95,7 @@ const FxPayload = {
                                 // quoteAsset: Fxprecision.quoteAsset,
                             });
                             const saveFxHistory = await fxTradeHistory.save();
-                            console.log("saveFxHistory------------------------------->", saveFxHistory);
+                            // console.log("saveFxHistory------------------------------->", saveFxHistory);
                         } else if(Number(filterRisk[0].positionAmt) == 0) {
                             let getExPos = await FxTrade.findOne({ isSignal: false, symbol: tradeInfo.o.s, position: tradeInfo.o.ps, user_id: user_id, status: 'OPEN' });
                             //console.log("getExPos--------------------------------------------->", getExPos);
@@ -103,7 +103,7 @@ const FxPayload = {
                             if(getExPos) {
                                 
                                 getExPos.pnl = ((+tradeInfo.o.ap) * (+tradeInfo.o.q)) - (getExPos.entryPrice * (+tradeInfo.o.q));
-                                console.log("PNL-------------------->", getExPos.pnl);
+                                // console.log("PNL-------------------->", getExPos.pnl);
                                 let initialMargin = ((getExPos.entryPrice) * (+tradeInfo.o.q)) / filterRisk[0].leverage;
                                 getExPos.profit = ((getExPos.pnl) / initialMargin) * 100;
                                 getExPos.fund = initialMargin;
@@ -131,7 +131,7 @@ const FxPayload = {
                                 getExPos.side = tradeInfo.o.S;
                                 getExPos.exitPrice = +tradeInfo.o.ap;
                                 const updateStatus = await getExPos.save();
-                                console.log("UpdateStatus------------------------>", updateStatus);
+                                // console.log("UpdateStatus------------------------>", updateStatus);
                             }                           
                         }
                             
@@ -148,20 +148,20 @@ const FxPayload = {
                     } else if( tradeInfo.o.X == "CANCELED") {
 
                         await this.DeleteOpenOrder(user_id, newFxOpenOrder.orderId);
-                        console.log(`OrderID : ${newFxOpenOrder.orderId} in Open Order Deleted SuccessFully`);
+                        // console.log(`OrderID : ${newFxOpenOrder.orderId} in Open Order Deleted SuccessFully`);
 
                     } else if( tradeInfo.o.X == "EXPIRED") {
 
                         await this.DeleteOpenOrder(user_id, newFxOpenOrder.orderId);
-                        console.log(`OrderID : ${newFxOpenOrder.orderId} in Open Order Deleted SuccessFully`);
+                        // console.log(`OrderID : ${newFxOpenOrder.orderId} in Open Order Deleted SuccessFully`);
 
                     } 
             
             } else  if( tradeInfo && tradeInfo.e == "ACCOUNT_UPDATE") {
-                console.log("Account_UpdateData------------------------->", tradeInfo.a.B[0])
+                // console.log("Account_UpdateData------------------------->", tradeInfo.a.B[0])
                 const fxWalletUpdate = await FxWallet.updateOne({ "user_id": user_id, "balance.asset": tradeInfo.a.B[0].a }, { "$set": { "balance.$.walletBalance": tradeInfo.a.B[0].wb, "balance.$.crossWalletBalance": tradeInfo.a.B[0].cw } })
                 // const fxUserWallet = await FxWallet.findOne({ "user_id": user_id})
-                console.log("Updated FX Wallet--------------------------->", fxWalletUpdate)
+                // console.log("Updated FX Wallet--------------------------->", fxWalletUpdate)
             }
         
         });
